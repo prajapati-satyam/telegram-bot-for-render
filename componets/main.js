@@ -5,8 +5,8 @@ require('dotenv').config()
 const BOT_TOKEN = process.env.TOKEN;
 
 // API endpoint for fetching student data
-const API_URL = process.env.URL; // Replace with your actual API link
-
+const API_URL = process.env.URL;  // Replace with your actual API link
+const sem4_url = process.env.SEM4_URL;
 const customMessage = `
 
 
@@ -14,7 +14,7 @@ const customMessage = `
 🤖 Co-developer and  Inspired by : Swayam Shah
 
 📢 Notice:  
-- Data is based on Semester 2.  
+- Data is based on Semester 4.  
 - Roll numbers may change; however, ID and Name are valid.  
 - Please confirm the roll number before taking any action.
 `;
@@ -63,7 +63,9 @@ bot.onText(/\/help/, (msg) => {
 // Function to fetch student data from API using fetch
 async function fetchStudentData(rollNumber) {
   try {
-    const response = await fetch(`${API_URL}/${rollNumber}`);
+    const response = await fetch(`${sem4_url}/${rollNumber}`, {
+      method: "POST"
+    });
 
     if (response.ok) {
       const studentData = await response.json();
@@ -105,7 +107,7 @@ bot.on('message', async (msg) => {
 // console.log(noticeMessage);
 
     if (student) {
-      const response = `Roll Number: ${student.rollnumber}\nName: ${student.name}\nID: ${student.id}`;
+      const response = `Roll Number:  ${student.RollNo}\nName:  ${student.StudentName}\nID:  ${student.EnrollmentNo}\nLabBatchNo:  ${student.LabBatchNo}`;
       bot.sendMessage(msg.chat.id, response);
     } else {
       bot.sendMessage(msg.chat.id, `No data found for Roll Number: ${rollNumber}`);
