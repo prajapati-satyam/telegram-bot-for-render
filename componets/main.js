@@ -72,7 +72,8 @@ async function fetchStudentData(rollNumber) {
       console.log("request hit for rollNumber :" , rollNumber);
       
       return studentData;
-    } else {
+    } else { 
+      console.log("request hit for rollNumber :" , rollNumber);
       return null;
     }
   } catch (error) {
